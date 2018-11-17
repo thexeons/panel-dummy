@@ -57,6 +57,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <li>
                         <a href="approved-user.php">Approved User</a>
                     </li>
+                    <li>
+                        <a href="blacklist-user.php">Blacklist User</a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -82,12 +85,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         <?php
             $getName = $_SESSION["searchFName"];
-            $conn = mysqli_connect("localhost","root","","skripsi");
+            $conn = mysqli_connect("localhost","root","","bcabank");
             $sql = "select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
-            $db =  mysql_select_db("skripsi",$server);
+            $db =  mysql_select_db("bcabank",$server);
             $query = mysql_query("select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'");
             $nom = 0;
             if(mysqli_num_rows($result)>0){

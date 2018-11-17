@@ -12,8 +12,8 @@ if($_SESSION["role"] != 1){
     }
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    unset($_SESSION["ResultID"]);
-    header("location: authorize-user.php");
+    unset($_SESSION["BlackListID"]);
+    header("location: blacklist-user.php");
     return;
 }
 ?>
@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Authorize Result</title>
+    <title>Blacklist Result</title>
     <link rel="shortcut icon" href="../css/Logo.png">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -66,7 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </nav>
     <br><br><br><br>
     <?php 
-        $resultID = $_SESSION["ResultID"];
+        $resultID = $_SESSION["BlackListID"];
         $conn = mysqli_connect("localhost","root","","bcabank");
         $sql = "select * from msdata where ktp = '$resultID'";
         $result = mysqli_query($conn,$sql);
@@ -90,7 +90,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     ?>
     <div class="col-sm-4"></div>
     <div style="text-align:left" class="col-sm-4">
-        <center><h3>New user has been approved.</h3></center><br>
+        <center><h3>User has been blacklisted.</h3></center><br>
         <table class="table table-bordered" >
             <tr>
                 <td style="width:155px"><b>First Name</b></td>

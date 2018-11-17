@@ -1,6 +1,8 @@
 <?php
 session_start();
  
+$_SESSION["searchFName"] = "";
+
 if(!isset($_SESSION["loggedin"])){
     header("location: login.php");
     return;
@@ -17,7 +19,7 @@ if($_SESSION["role"] != 1){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Admin</title>
+    <title>Blacklist Page</title>
     <link rel="shortcut icon" href="../css/Logo.png">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -32,12 +34,6 @@ if($_SESSION["role"] != 1){
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <style type="text/css">
         body{ font: 14px sans-serif; text-align: center; }
-        .modalx {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
     </style>
 </head>
 <body>
@@ -73,20 +69,21 @@ if($_SESSION["role"] != 1){
         </div>
     </nav>
     <br><br><br><br>
+
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
         <?php
             $conn = mysqli_connect("localhost","root","","bcabank");
-            $sql = "select * from msdata where verified = '0'";
+            $sql = "select * from msdata where verified = '1'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
             $db =  mysql_select_db("bcabank",$server);
-            $query = mysql_query("select * from msdata where verified = '0'");
+            $query = mysql_query("select * from msdata where verified = '1'");
 
             if(mysqli_num_rows($result)>0){
 
-                echo "<h1>Pending user.</h1>";
+                echo "<h1>Approved user.</h1>";
                 echo "<br>";
                 echo "<table class=\"table table-hover\">";
                 echo "<thead>";
@@ -112,15 +109,14 @@ if($_SESSION["role"] != 1){
                 $getPhoto = $row['photo'];
 
                 $class = ($i == 0) ? "" : "alt";
-                echo "<form action=\"authorize-user-db.php\" method=\"post\" enctype=\"multipart/form-data\">";
+                echo "<form action=\"blacklist-user-db.php\" method=\"post\" enctype=\"multipart/form-data\">";
                 echo "<tr class=\"".$class."\">";
                 echo "<td data-toggle=\"modal\" data-target=\"#$getID\" style=\"text-align:center;vertical-align:middle;width:90px\">".$row["ktp"]."</td>";
                 echo "<td style=\"text-align:center;vertical-align:middle;\">".$row["firstname"]."</td>";
                 echo "<td style=\"text-align:center;vertical-align:middle;\">".$row["lastname"]."</td>";
                 echo "<td>
                 <input type=\"hidden\" name =\"id\" value=\"$getID\">
-                <input type=\"submit\" class=\"btn btn-success\" value=\"&#x2714;\" name =\"authorize\">
-                <input type=\"submit\" class=\"btn btn-danger\" value=\"&#x2716;\" name =\"reject\">
+                <input type=\"submit\" class=\"btn btn-danger\" value=\"&#x2716;\" name =\"blacklist\">
                 </td>";
                 echo "</form>";
                 echo "</tr>";
@@ -214,12 +210,13 @@ if($_SESSION["role"] != 1){
                 }
             }
             else {
-                echo "<h1>No Pending user.</h1>";
+                echo "<h1>No Approved user.</h1>";
             }
         ?>
     </table>
     </div>
 
     <div class="col-sm-3"></div>
+
 </body>
 </html>

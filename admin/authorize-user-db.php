@@ -71,7 +71,7 @@ if(isset($_POST['authorize'])){
 else if(isset($_POST['reject'])){
 	$getCurrId = $_POST["id"];
 
-	$conn = new mysqli("localhost","root","","skripsi");
+	$conn = new mysqli("localhost","root","","bcabank");
 	$sql = "UPDATE msdata set verified = '2' where ktp = '$getCurrId'";
 	$conn->query($sql);
 	$conn->close();

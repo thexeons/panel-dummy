@@ -53,6 +53,9 @@ if($_SESSION["role"] != 1){
                     <li>
                         <a href="approved-user.php">Approved User</a>
                     </li>
+                    <li>
+                        <a href="blacklist-user.php">Blacklist User</a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
