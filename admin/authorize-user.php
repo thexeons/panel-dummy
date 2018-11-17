@@ -32,12 +32,6 @@ if($_SESSION["role"] != 1){
     <script type="text/javascript" src="../js/bootstrap.min.js"></script>
     <style type="text/css">
         body{ font: 14px sans-serif; text-align: center; }
-        .modalx {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
     </style>
 </head>
 <body>
