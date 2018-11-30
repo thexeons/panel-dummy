@@ -4,7 +4,7 @@ session_start();
 $_SESSION["searchFName"] = "";
 
 if(!isset($_SESSION["loggedin"])){
-    header("location: login.php");
+    header("location: ../login.php");
     return;
 }
 if($_SESSION["role"] != 1){
