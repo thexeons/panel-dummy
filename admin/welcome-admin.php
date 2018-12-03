@@ -51,10 +51,13 @@ if($_SESSION["role"] != 1){
                         <a href="authorize-user.php">Authorize User</a>
                     </li>
                     <li>
-                        <a href="approved-user.php">Approved User</a>
+                        <a href="blacklist-user.php">Blacklist User</a>
                     </li>
                     <li>
-                        <a href="blacklist-user.php">Blacklist User</a>
+                        <a href="update-user.php">Pending Update</a>
+                    </li>
+                    <li>
+                        <a href="approved-user.php">Approved User</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

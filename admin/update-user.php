@@ -1,6 +1,6 @@
 <?php
 session_start();
- 
+
 if(!isset($_SESSION["loggedin"])){
     header("location: ../login.php");
     return;
@@ -14,7 +14,7 @@ if($_SESSION["role"] != 1){
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $_SESSION["searchFName"] = $_POST["searchFirstName"];
-    header("location: approved-user.php");
+    header("location: update-user.php");
     return;
 }
 ?>
@@ -23,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Admin</title>
+    <title>Pending Updates</title>
     <link rel="shortcut icon" href="../css/Logo.png">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -78,8 +78,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         </div>
     </nav>
     <br><br>
-    <h1>Approved User</h1>
-    <div class="col-sm-2" style="overflow-y:scroll; height:550px;">
+    <h1>Updates List</h1>
+    <div class="col-sm-2" style="overflow-y:scroll; height:1000px;">
         <div class="form-group">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <input type="text" name="searchFirstName" class="form-control" placeholder="Search...">
@@ -89,12 +89,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <?php
             $getName = $_SESSION["searchFName"];
             $conn = mysqli_connect("localhost","root","","bcabank");
-            $sql = "select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'";
+            $sql = "select msdata.firstname as ofn,msdata.lastname as oln,msdata.ktp as oktp,msdata.email as oemail,msdata.dob as odob,msdata.address as oaddress,msdata.nationality as onationality,msdata.accountnum as oaccountnum,msdata.photo as ophoto, mstemp.firstname as nfn,mstemp.lastname as nln,mstemp.ktp as nktp,mstemp.email as nemail,mstemp.dob as ndob,mstemp.address as naddress,mstemp.nationality as nnationality,mstemp.accountnum as naccountnum,mstemp.photo as nphoto from msdata inner join mstemp on msdata.ktp = mstemp.ktp where msdata.firstname like '%$getName%'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
             $db =  mysql_select_db("bcabank",$server);
-            $query = mysql_query("select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'");
+            $query = mysql_query("select msdata.firstname as ofn,msdata.lastname as oln,msdata.ktp as oktp,msdata.email as oemail,msdata.dob as odob,msdata.address as oaddress,msdata.nationality as onationality,msdata.accountnum as oaccountnum,msdata.photo as ophoto, mstemp.firstname as nfn,mstemp.lastname as nln,mstemp.ktp as nktp,mstemp.email as nemail,mstemp.dob as ndob,mstemp.address as naddress,mstemp.nationality as nnationality,mstemp.accountnum as naccountnum,mstemp.photo as nphoto from msdata inner join mstemp on msdata.ktp = mstemp.ktp where msdata.firstname like '%$getName%'");
             $nom = 0;
             if(mysqli_num_rows($result)>0){
                 echo "<table id = \"data\" class=\"table table-hover\">";
@@ -108,27 +108,39 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "<td style=\"display:none\"><b>Nationality</b></td>";
                 echo "<td style=\"display:none\"><b>Account Num</b></td>";
                 echo "<td style=\"display:none\"><b>Photo</b></td>";
-                echo "<td style=\"display:none\"><b>Verified</b></td>";
+
+                echo "<td style=\"display:none\"><b>First Name</b></td>";
+                echo "<td style=\"display:none\"><b>L. Name</b></td>";
+                echo "<td style=\"display:none\"><b>Ktp</b></td>";
+                echo "<td style=\"display:none\"><b>Email</b></td>";
+                echo "<td style=\"display:none\"><b>Dob</b></td>";
+                echo "<td style=\"display:none\"><b>Address</b></td>";
+                echo "<td style=\"display:none\"><b>Nationality</b></td>";
+                echo "<td style=\"display:none\"><b>Account Num</b></td>";
+                echo "<td style=\"display:none\"><b>Photo</b></td>";
                 echo "</tr>";
 
                 while ($row = mysql_fetch_array($query)) {
-                    $getFName   = $row["firstname"];
-                    $getLName   = $row["lastname"];
-                    $getKtp     = $row["ktp"];
-                    $getEmail   = $row["email"];
-                    $getDob     = $row["dob"];
-                    $getAdd     = $row["address"];
-                    $getNation  = $row["nationality"];
-                    $getAcc     = $row["accountnum"];
-                    $getPhoto   = $row["photo"];
-                    $getVerif   = $row["verified"];
+                    $getFName   = $row["ofn"];
+                    $getLName   = $row["oln"];
+                    $getKtp     = $row["oktp"];
+                    $getEmail   = $row["oemail"];
+                    $getDob     = $row["odob"];
+                    $getAdd     = $row["oaddress"];
+                    $getNation  = $row["onationality"];
+                    $getAcc     = $row["oaccountnum"];
+                    $getPhoto   = $row["ophoto"];
 
-                    if($getVerif==1){
-                        $getVerif="APPROVED";
-                    }
-                    else{
-                        $getVerif="BLACKLISTED";
-                    }
+                    $getFNameNew   = $row["nfn"];
+                    $getLNameNew   = $row["nln"];
+                    $getKtpNew     = $row["nktp"];
+                    $getEmailNew   = $row["nemail"];
+                    $getDobNew     = $row["ndob"];
+                    $getAddNew     = $row["naddress"];
+                    $getNationNew  = $row["nnationality"];
+                    $getAccNew     = $row["naccountnum"];
+                    $getPhotoNew   = $row["nphoto"];
+                    
 
                     echo "<tr onclick=\"settext(this.rowIndex)\">";
                     echo "<td>$getFName</td>";
@@ -140,37 +152,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     echo "<td style=\"display:none\">$getNation</td>";
                     echo "<td style=\"display:none\">$getAcc</td>";
                     echo "<td style=\"display:none\">$getPhoto</td>";
-                    echo "<td style=\"display:none\">$getVerif</td>";
+
+                    echo "<td style=\"display:none\">$getFNameNew</td>";
+                    echo "<td style=\"display:none\">$getLNameNew</td>";
+                    echo "<td style=\"display:none\">$getKtpNew</td>";
+                    echo "<td style=\"display:none\">$getEmailNew</td>";
+                    echo "<td style=\"display:none\">$getDobNew</td>";
+                    echo "<td style=\"display:none\">$getAddNew</td>";
+                    echo "<td style=\"display:none\">$getNationNew</td>";
+                    echo "<td style=\"display:none\">$getAccNew</td>";
+                    echo "<td style=\"display:none\">$getPhotoNew</td>";
                     echo "</tr>";
                 }
             }  
         ?>
         </table>
     </div>
+
+    <form action="update-user-db.php" method="post" onsubmit="return confirm('Authorize this update?');">
     <div style="text-align:left">
         <div class="wrapper col-sm-5">
             <br>
+                <div class="form-group">
+                    <h3>Current Data</h3>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <input type="hidden" name ="id" id="id">
+                    <label>KTP</label><input type="text" name ="norekx" id="norek" class="form-control" value="EMPTY" readonly>
+                </div>
                 <div class="form-group">
                     <label>First Name</label><input type="text" id="firstname" class="form-control" value="EMPTY" readonly>
                 </div>
-                <div class="form-group">
-                    <label>KTP</label><input type="text" id="norek" class="form-control" value="EMPTY" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Date of Birth</label><input type="text" id="dob" class="form-control" value="EMPTY" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Account Number</label><input type="text" id="acc" class="form-control" value="EMPTY" readonly>
-                </div>
-                <div class="form-group">
-                    <label>Photo</label><br>
-                    <img id ="photo" style="width:540px;height:213px" src="../css/null.png">
-                </div>
-        </div>
-    </div>
-    <div style="text-align:left">
-        <div class="wrapper col-sm-5">
-            <br>
                 <div class="form-group">
                     <label>Last Name</label><input type="text" id="lastname" class="form-control" value="EMPTY" readonly>
                 </div>
@@ -181,13 +194,63 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <label>Address</label><input type="text" id="address" class="form-control" value="EMPTY" readonly>
                 </div>
                 <div class="form-group">
+                    <label>Date of Birth</label><input type="text" id="dob" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Account Number</label><input type="text" id="acc" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
                     <label>Nationality</label><input type="text" id="nation" class="form-control" value="EMPTY" readonly>
                 </div>
                 <div class="form-group">
-                    <label>Status</label><input type="text" id="verif" class="form-control" value="EMPTY" readonly>
+                    <label>Photo</label><br>
+                    <img id ="photo" style="width:540px;height:213px" src="../css/null.png">
                 </div>
         </div>
     </div>
+    <div style="text-align:left">
+        <div class="wrapper col-sm-5">
+            <br>
+               <div class="form-group">
+                    <h3>New Data</h3>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label>KTP</label><input type="text" id="noreknew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>First Name</label><input type="text" id="firstnamenew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label><input type="text" id="lastnamenew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Email</label><input type="text" id="emailnew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Address</label><input type="text" id="addressnew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Date of Birth</label><input type="text" id="dobnew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Account Number</label><input type="text" id="accnew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Nationality</label><input type="text" id="nationnew" class="form-control" value="EMPTY" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Photo</label><br>
+                    <img id ="getPhotoNew" style="width:540px;height:213px" src="../css/null.png">
+                </div> 
+        </div>
+    </div>
+
+    <div>
+        <button class ="btn btn-success" type="submit" name="verifyUpdate">Authorize Update</button>
+    </div>
+
+    </form>
 </body>
 </html>
 
@@ -203,17 +266,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         var getNat      = table.rows[x].cells[6].innerHTML;
         var getAcc      = table.rows[x].cells[7].innerHTML;
         var getPho      = table.rows[x].cells[8].innerHTML;
-        var getVerif    = table.rows[x].cells[9].innerHTML;
+
+        var getFirstNew    = table.rows[x].cells[9].innerHTML;
+        var getLastNew     = table.rows[x].cells[10].innerHTML;
+        var getRekNew      = table.rows[x].cells[11].innerHTML;
+        var getEmailNew    = table.rows[x].cells[12].innerHTML;
+        var getDobNew      = table.rows[x].cells[13].innerHTML;
+        var getAddNew      = table.rows[x].cells[14].innerHTML;
+        var getNatNew      = table.rows[x].cells[15].innerHTML;
+        var getAccNew      = table.rows[x].cells[16].innerHTML;
+        var getPhoNew      = table.rows[x].cells[17].innerHTML;
 
         document.getElementById('firstname').value  = getFirst;
         document.getElementById('lastname').value   = getLast;
         document.getElementById('norek').value      = getRek;
+        document.getElementById('id').value         = getRek;
         document.getElementById('email').value      = getEmail;
         document.getElementById('dob').value        = getDob;
         document.getElementById('address').value    = getAdd;
         document.getElementById('acc').value        = getAcc;
         document.getElementById('nation').value     = getNat;
         document.getElementById('photo').src        = getPho;
-        document.getElementById('verif').value        = getVerif;
+
+
+        document.getElementById('firstnamenew').value  = getFirstNew;
+        document.getElementById('lastnamenew').value   = getLastNew;
+        document.getElementById('noreknew').value      = getRekNew;
+        document.getElementById('emailnew').value      = getEmailNew;
+        document.getElementById('dobnew').value        = getDobNew;
+        document.getElementById('addressnew').value    = getAddNew;
+        document.getElementById('accnew').value        = getAccNew;
+        document.getElementById('nationnew').value     = getNatNew;
+        document.getElementById('photonew').src        = getPhoNew;
     }
 </script>
