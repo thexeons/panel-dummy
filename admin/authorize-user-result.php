@@ -125,8 +125,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <td><?php echo htmlspecialchars($getResultAccountNum);?></td>
             </tr>
             <tr>
+                <?php 
+                $append = "data:image/jpeg;base64,";
+                $photoresult = $append.$getResultPhoto;
+                ?>
                 <td><b>Photo</b></td>
-                <td><img id ="photo" style="width:360px;height:180px" src="<?php echo htmlspecialchars($getResultPhoto);?>"></td>
+                <td><img id ="photo" style="width:360px;height:180px" src="<?php echo htmlspecialchars($photoresult);?>"></td>
             </tr>
         </table>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

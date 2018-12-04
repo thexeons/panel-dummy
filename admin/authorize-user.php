@@ -191,8 +191,11 @@ if($_SESSION["role"] != 1){
                 echo "<div class=\"form-group\">";
                 echo "<label style=\"width:170px\">Photo</label>";
 
+                $append = "data:image/jpeg;base64,";
+                $photoresult = $append.$getPhoto;
                 ?>
-                <img id ="photo" style="width:660px;height:300px" src="<?php echo "$getPhoto";?>">
+
+                <img id ="photo" style="width:660px;height:300px" src="<?php echo "$photoresult";?>">
                 <?php
                 
                 echo "</div><br>";

@@ -126,7 +126,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </tr>
             <tr>
                 <td><b>Photo</b></td>
-                <td><img id ="photo" style="width:360px;height:180px" src="<?php echo htmlspecialchars($getResultPhoto);?>"></td>
+
+                <?php 
+                $append = "data:image/jpeg;base64,";
+                $photoresult = $append.$getResultPhoto;
+                ?>
+
+                <td><img id ="photo" style="width:360px;height:180px" src="<?php echo htmlspecialchars($photoresult);?>"></td>
             </tr>
         </table>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

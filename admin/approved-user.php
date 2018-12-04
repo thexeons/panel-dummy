@@ -202,7 +202,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         var getAdd      = table.rows[x].cells[5].innerHTML;
         var getNat      = table.rows[x].cells[6].innerHTML;
         var getAcc      = table.rows[x].cells[7].innerHTML;
-        var getPho      = table.rows[x].cells[8].innerHTML;
+        var getPho      = "data:image/jpeg;base64,"+table.rows[x].cells[8].innerHTML;
         var getVerif    = table.rows[x].cells[9].innerHTML;
 
         document.getElementById('firstname').value  = getFirst;

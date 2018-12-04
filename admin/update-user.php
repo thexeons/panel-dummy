@@ -129,7 +129,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $getAdd     = $row["oaddress"];
                     $getNation  = $row["onationality"];
                     $getAcc     = $row["oaccountnum"];
-                    $getPhoto   = $row["ophoto"];
+                    $getPhoto   = "data:image/jpeg;base64,".$row["ophoto"];
 
                     $getFNameNew   = $row["nfn"];
                     $getLNameNew   = $row["nln"];
@@ -139,7 +139,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $getAddNew     = $row["naddress"];
                     $getNationNew  = $row["nnationality"];
                     $getAccNew     = $row["naccountnum"];
-                    $getPhotoNew   = $row["nphoto"];
+                    $getPhotoNew   = "data:image/jpeg;base64,".$row["nphoto"];
                     
 
                     echo "<tr onclick=\"settext(this.rowIndex)\">";
