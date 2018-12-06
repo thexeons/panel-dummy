@@ -1,16 +1,18 @@
 <?php
 session_start();
+$file = file_get_contents('bcainstance');
+
 if(isset($_POST['authorize'])){
 	$getCurrId = $_POST["id"];
 
 	$_SESSION["ResultID"] = $getCurrId;
 
-	$conn = new mysqli("localhost","root","","bcabank");
+	$conn = new mysqli("localhost","root","",$file);
 	$sql = "UPDATE msdata set verified = '1' where ktp = '$getCurrId'";
 	$conn->query($sql);
 	$conn->close();
 
-	$conn = new mysqli("localhost", "root", "", "bcabank");
+	$conn = new mysqli("localhost", "root", "", $file);
     $sql = "select * from msdata where ktp='$getCurrId'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -71,7 +73,7 @@ if(isset($_POST['authorize'])){
 else if(isset($_POST['reject'])){
 	$getCurrId = $_POST["id"];
 
-	$conn = new mysqli("localhost", "root", "", "bcabank");
+	$conn = new mysqli("localhost", "root", "", $file);
     $sql = "select * from msdata where ktp='$getCurrId'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {

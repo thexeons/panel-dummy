@@ -1,6 +1,7 @@
 <?php
 session_start();
- 
+$file = file_get_contents('bcainstance');
+
 $_SESSION["searchFName"] = "";
 
 if(!isset($_SESSION["loggedin"])){
@@ -76,12 +77,12 @@ if($_SESSION["role"] != 1){
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
         <?php
-            $conn = mysqli_connect("localhost","root","","bcabank");
+            $conn = mysqli_connect("localhost","root","",$file);
             $sql = "select * from msdata where verified = '1'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
-            $db =  mysql_select_db("bcabank",$server);
+            $db =  mysql_select_db($file,$server);
             $query = mysql_query("select * from msdata where verified = '1'");
 
             if(mysqli_num_rows($result)>0){

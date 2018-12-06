@@ -1,6 +1,7 @@
 <?php
 session_start();
- 
+$file = file_get_contents('bcainstance');
+
 if(!isset($_SESSION["loggedin"])){
     header("location: ../login.php");
     return;
@@ -67,12 +68,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <br><br><br><br>
     <?php 
         $resultID = $_SESSION["ResultID"];
-        $conn = mysqli_connect("localhost","root","","bcabank");
+        $conn = mysqli_connect("localhost","root","",$file);
         $sql = "select * from msdata where ktp = '$resultID'";
         $result = mysqli_query($conn,$sql);
 
         $server = mysql_connect("localhost","root", "");
-        $db =  mysql_select_db("bcabank",$server);
+        $db =  mysql_select_db($file,$server);
         $query = mysql_query("select * from msdata where ktp = '$resultID'");
         if(mysqli_num_rows($result)>0){
             while ($row = mysql_fetch_array($query)) {

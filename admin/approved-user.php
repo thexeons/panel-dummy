@@ -1,6 +1,8 @@
 <?php
 session_start();
- 
+
+$file = file_get_contents('bcainstance');
+
 if(!isset($_SESSION["loggedin"])){
     header("location: ../login.php");
     return;
@@ -88,12 +90,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         <?php
             $getName = $_SESSION["searchFName"];
-            $conn = mysqli_connect("localhost","root","","bcabank");
+            $conn = mysqli_connect("localhost","root","",$file);
             $sql = "select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
-            $db =  mysql_select_db("bcabank",$server);
+            $db =  mysql_select_db($file,$server);
             $query = mysql_query("select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'");
             $nom = 0;
             if(mysqli_num_rows($result)>0){

@@ -1,14 +1,16 @@
 <?php
 session_start();
+$file = file_get_contents('bcainstance');
+
 if(isset($_POST['verifyUpdate'])){
 	$getCurrId = $_POST['id'];
 
-	$conn = new mysqli("localhost","root","","bcabank");
+	$conn = new mysqli("localhost","root","",$file);
 	$sql = "DELETE from msdata where ktp ='$getCurrId'";
 	$conn->query($sql);
 	$conn->close();
 	
-	$conn = new mysqli("localhost", "root", "", "bcabank");
+	$conn = new mysqli("localhost", "root", "", $file);
     $sql = "select * from mstemp where ktp='$getCurrId'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
@@ -25,12 +27,12 @@ if(isset($_POST['verifyUpdate'])){
         }
     }
 
-    $conn = new mysqli("localhost", "root", "", "bcabank");
+    $conn = new mysqli("localhost", "root", "", $file);
     $sql = "insert into msdata (firstname,lastname,ktp,email,dob,address,nationality,accountnum,photo,verified) values ('$getFirst','$getLast','$getKtp','$getEmail','$getDob','$getAddr','$getNatio','$getAccN','$getPhot','1')";
     $result = $conn->query($sql);
 	
 
-    $conn = new mysqli("localhost", "root", "", "bcabank");
+    $conn = new mysqli("localhost", "root", "", $file);
     $sql = "delete from mstemp where ktp ='$getCurrId'";
     $result = $conn->query($sql);
         

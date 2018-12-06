@@ -1,5 +1,6 @@
 <?php
 session_start();
+$file = file_get_contents('bcainstance');
 
 if(!isset($_SESSION["loggedin"])){
     header("location: ../login.php");
@@ -88,12 +89,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         <?php
             $getName = $_SESSION["searchFName"];
-            $conn = mysqli_connect("localhost","root","","bcabank");
+            $conn = mysqli_connect("localhost","root","",$file);
             $sql = "select msdata.firstname as ofn,msdata.lastname as oln,msdata.ktp as oktp,msdata.email as oemail,msdata.dob as odob,msdata.address as oaddress,msdata.nationality as onationality,msdata.accountnum as oaccountnum,msdata.photo as ophoto, mstemp.firstname as nfn,mstemp.lastname as nln,mstemp.ktp as nktp,mstemp.email as nemail,mstemp.dob as ndob,mstemp.address as naddress,mstemp.nationality as nnationality,mstemp.accountnum as naccountnum,mstemp.photo as nphoto from msdata inner join mstemp on msdata.ktp = mstemp.ktp where msdata.firstname like '%$getName%'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
-            $db =  mysql_select_db("bcabank",$server);
+            $db =  mysql_select_db($file,$server);
             $query = mysql_query("select msdata.firstname as ofn,msdata.lastname as oln,msdata.ktp as oktp,msdata.email as oemail,msdata.dob as odob,msdata.address as oaddress,msdata.nationality as onationality,msdata.accountnum as oaccountnum,msdata.photo as ophoto, mstemp.firstname as nfn,mstemp.lastname as nln,mstemp.ktp as nktp,mstemp.email as nemail,mstemp.dob as ndob,mstemp.address as naddress,mstemp.nationality as nnationality,mstemp.accountnum as naccountnum,mstemp.photo as nphoto from msdata inner join mstemp on msdata.ktp = mstemp.ktp where msdata.firstname like '%$getName%'");
             $nom = 0;
             if(mysqli_num_rows($result)>0){
