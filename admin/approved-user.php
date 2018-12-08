@@ -194,7 +194,7 @@ $buttonBlacklist = "<button>Haha</button>";
                 </div>
                 <div class="form-group">
                     <label>Photo</label><br>
-                    <img id ="photo" style="width:540px;height:213px" src="../css/null.png">
+                    <img id ="photo" style="width:540px;height:270px" src="../css/null.png">
                 </div>
         </div>
     </div>
