@@ -14,7 +14,7 @@ if($_SESSION["role"] != 1){
 }
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     unset($_SESSION["BlackListID"]);
-    header("location: blacklist-user.php");
+    header("location: approved-user.php");
     return;
 }
 ?>

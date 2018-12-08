@@ -16,9 +16,26 @@ if($_SESSION["role"] != 1){
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $_SESSION["searchFName"] = $_POST["searchFirstName"];
+    
+
+    if($_POST["accountstatus"]=="1"){
+        $_SESSION["verified1"] = "1";
+        $_SESSION["verified2"] = "1";
+    }
+    if($_POST["accountstatus"]=="2"){
+        $_SESSION["verified1"] = "2";
+        $_SESSION["verified2"] = "2";
+    }
+    if($_POST["accountstatus"]=="-1"){
+        $_SESSION["verified1"] = "1";
+        $_SESSION["verified2"] = "2";
+    }
     header("location: approved-user.php");
     return;
 }
+
+$buttonBlacklist = "<button>Haha</button>";
+
 ?>
  
 <!DOCTYPE html>
@@ -57,9 +74,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <a href="authorize-user.php">Authorize User</a>
                     </li>
                     <li>
-                        <a href="blacklist-user.php">Blacklist User</a>
-                    </li>
-                    <li>
                         <a href="update-user.php">Pending Update</a>
                     </li>
                     <li>
@@ -84,19 +98,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="col-sm-2" style="overflow-y:scroll; height:550px;">
         <div class="form-group">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <input type="text" name="searchFirstName" class="form-control" placeholder="Search...">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                    <input type="text" name="searchFirstName" class="form-control" placeholder="Search...">
+                </div>
+                <select class="form-control" name="accountstatus">
+                    <option value="-1">---Select Type---</option>
+                    <option value="1">Approved</option>
+                    <option value="2">Blacklist</option>
+                </select>
                 <input type="submit" style="display: none">
             </form>
-            </div>
+        </div>
         <?php
             $getName = $_SESSION["searchFName"];
+            $getVer1 = $_SESSION["verified1"];
+            $getVer2 = $_SESSION["verified2"];
+
             $conn = mysqli_connect("localhost","root","",$file);
-            $sql = "select * from msdata inner JOIN msuser ON msdata.adminid=msuser.id where (verified = '1' or verified = '2') and firstname like '%$getName%'";
+            $sql = "select * from msdata inner JOIN msuser ON msdata.adminid=msuser.id where (verified = '$getVer1' or verified = '$getVer2') and firstname like '%$getName%'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
             $db =  mysql_select_db($file,$server);
-            $query = mysql_query("select * from msdata inner JOIN msuser ON msdata.adminid=msuser.id where (verified = '1' or verified = '2') and firstname like '%$getName%'");
+            $query = mysql_query("select * from msdata inner JOIN msuser ON msdata.adminid=msuser.id where (verified = '$getVer1' or verified = '$getVer2') and firstname like '%$getName%'");
             $nom = 0;
             if(mysqli_num_rows($result)>0){
                 echo "<table id = \"data\" class=\"table table-hover\">";
@@ -194,6 +219,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="form-group">
                     <label>Handled by</label><input type="text" id="adminid" class="form-control" value="EMPTY" readonly>
                 </div>
+                <div class="form-group">
+                    <form action="blacklist-user-db.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="blacklistktp" id="blktp">
+                        <button class="btn btn-danger" id="blbutton" name="blacklist" style="visibility: hidden">Blacklist</button>
+                    </form>    
+                </div>
         </div>
     </div>
 </body>
@@ -214,6 +245,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         var getVerif    = table.rows[x].cells[9].innerHTML;
         var getAdmin    = table.rows[x].cells[10].innerHTML;
 
+        if(getVerif=="APPROVED"){
+            document.getElementById('blbutton').style.visibility = 'visible';
+        }
+        if(getVerif=="BLACKLISTED"){
+            document.getElementById('blbutton').style.visibility = 'hidden';
+        }
 
         document.getElementById('firstname').value  = getFirst;
         document.getElementById('lastname').value   = getLast;
@@ -226,5 +263,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         document.getElementById('photo').src        = getPho;
         document.getElementById('verif').value      = getVerif;
         document.getElementById('adminid').value      = getAdmin;
+
+        document.getElementById('blktp').value      = getRek;
     }
 </script>

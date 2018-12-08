@@ -2,6 +2,8 @@
 session_start();
  
 $_SESSION["searchFName"] = "";
+$_SESSION["verified1"] = "1";
+$_SESSION["verified2"] = "2";
 
 if(!isset($_SESSION["loggedin"])){
     header("location: ../login.php");
@@ -49,9 +51,6 @@ if($_SESSION["role"] != 1){
                 <ul class="nav navbar-nav navbar-left">
                     <li>
                         <a href="authorize-user.php">Authorize User</a>
-                    </li>
-                    <li>
-                        <a href="blacklist-user.php">Blacklist User</a>
                     </li>
                     <li>
                         <a href="update-user.php">Pending Update</a>

@@ -56,9 +56,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <a href="authorize-user.php">Authorize User</a>
                     </li>
                     <li>
-                        <a href="blacklist-user.php">Blacklist User</a>
-                    </li>
-                    <li>
                         <a href="update-user.php">Pending Update</a>
                     </li>
                     <li>
@@ -83,7 +80,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="col-sm-2" style="overflow-y:scroll; height:1000px;">
         <div class="form-group">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <input type="text" name="searchFirstName" class="form-control" placeholder="Search...">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                    <input type="text" name="searchFirstName" class="form-control" placeholder="Search...">
+                </div> 
                 <input type="submit" style="display: none">
             </form>
             </div>

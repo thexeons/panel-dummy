@@ -48,9 +48,6 @@ if($_SESSION["role"] != 1){
                         <a href="authorize-user.php">Authorize User</a>
                     </li>
                     <li>
-                        <a href="blacklist-user.php">Blacklist User</a>
-                    </li>
-                    <li>
                         <a href="update-user.php">Pending Update</a>
                     </li>
                     <li>

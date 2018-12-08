@@ -3,7 +3,7 @@ session_start();
 $file = file_get_contents('bcainstance');
 
 if(isset($_POST['blacklist'])){
-	$getCurrId = $_POST['id'];
+	$getCurrId = $_POST['blacklistktp'];
 	$_SESSION["BlackListID"] = $getCurrId;
 	$thisAdmin = $_SESSION["id"];
 	$conn = new mysqli("localhost","root","",$file);
