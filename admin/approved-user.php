@@ -91,12 +91,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <?php
             $getName = $_SESSION["searchFName"];
             $conn = mysqli_connect("localhost","root","",$file);
-            $sql = "select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'";
+            $sql = "select * from msdata inner JOIN msuser ON msdata.adminid=msuser.id where (verified = '1' or verified = '2') and firstname like '%$getName%'";
             $result = mysqli_query($conn,$sql);
 
             $server = mysql_connect("localhost","root", "");
             $db =  mysql_select_db($file,$server);
-            $query = mysql_query("select * from msdata where (verified = '1' or verified = '2') and firstname like '%$getName%'");
+            $query = mysql_query("select * from msdata inner JOIN msuser ON msdata.adminid=msuser.id where (verified = '1' or verified = '2') and firstname like '%$getName%'");
             $nom = 0;
             if(mysqli_num_rows($result)>0){
                 echo "<table id = \"data\" class=\"table table-hover\">";
@@ -111,6 +111,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 echo "<td style=\"display:none\"><b>Account Num</b></td>";
                 echo "<td style=\"display:none\"><b>Photo</b></td>";
                 echo "<td style=\"display:none\"><b>Verified</b></td>";
+                echo "<td style=\"display:none\"><b>Admin Name</b></td>";
                 echo "</tr>";
 
                 while ($row = mysql_fetch_array($query)) {
@@ -124,6 +125,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $getAcc     = $row["accountnum"];
                     $getPhoto   = $row["photo"];
                     $getVerif   = $row["verified"];
+                    $getAdmin   = $row["username"];
 
                     if($getVerif==1){
                         $getVerif="APPROVED";
@@ -143,6 +145,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     echo "<td style=\"display:none\">$getAcc</td>";
                     echo "<td style=\"display:none\">$getPhoto</td>";
                     echo "<td style=\"display:none\">$getVerif</td>";
+                    echo "<td style=\"display:none\">$getAdmin</td>";
                     echo "</tr>";
                 }
             }  
@@ -188,6 +191,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="form-group">
                     <label>Status</label><input type="text" id="verif" class="form-control" value="EMPTY" readonly>
                 </div>
+                <div class="form-group">
+                    <label>Handled by</label><input type="text" id="adminid" class="form-control" value="EMPTY" readonly>
+                </div>
         </div>
     </div>
 </body>
@@ -206,6 +212,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         var getAcc      = table.rows[x].cells[7].innerHTML;
         var getPho      = "data:image/jpeg;base64,"+table.rows[x].cells[8].innerHTML;
         var getVerif    = table.rows[x].cells[9].innerHTML;
+        var getAdmin    = table.rows[x].cells[10].innerHTML;
+
 
         document.getElementById('firstname').value  = getFirst;
         document.getElementById('lastname').value   = getLast;
@@ -216,6 +224,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         document.getElementById('acc').value        = getAcc;
         document.getElementById('nation').value     = getNat;
         document.getElementById('photo').src        = getPho;
-        document.getElementById('verif').value        = getVerif;
+        document.getElementById('verif').value      = getVerif;
+        document.getElementById('adminid').value      = getAdmin;
     }
 </script>

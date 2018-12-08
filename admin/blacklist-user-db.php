@@ -5,9 +5,9 @@ $file = file_get_contents('bcainstance');
 if(isset($_POST['blacklist'])){
 	$getCurrId = $_POST['id'];
 	$_SESSION["BlackListID"] = $getCurrId;
-
+	$thisAdmin = $_SESSION["id"];
 	$conn = new mysqli("localhost","root","",$file);
-	$sql = "UPDATE msdata set verified = '2' where ktp = '$getCurrId'";
+	$sql = "UPDATE msdata set verified = '2',adminid='$thisAdmin' where ktp = '$getCurrId'";
 	$conn->query($sql);
 	$conn->close();
 	

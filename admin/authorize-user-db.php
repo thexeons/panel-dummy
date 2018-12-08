@@ -6,9 +6,10 @@ if(isset($_POST['authorize'])){
 	$getCurrId = $_POST["id"];
 
 	$_SESSION["ResultID"] = $getCurrId;
+	$thisAdmin = $_SESSION["id"];
 
 	$conn = new mysqli("localhost","root","",$file);
-	$sql = "UPDATE msdata set verified = '1' where ktp = '$getCurrId'";
+	$sql = "UPDATE msdata set verified = '1',adminid='$thisAdmin' where ktp = '$getCurrId'";
 	$conn->query($sql);
 	$conn->close();
 
