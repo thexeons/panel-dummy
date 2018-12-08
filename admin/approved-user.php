@@ -102,6 +102,7 @@ $buttonBlacklist = "<button>Haha</button>";
                     <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
                     <input type="text" name="searchFirstName" class="form-control" placeholder="Search...">
                 </div>
+                <br>
                 <select class="form-control" name="accountstatus">
                     <option value="-1">---Select Type---</option>
                     <option value="1">Approved</option>
