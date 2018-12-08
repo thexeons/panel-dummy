@@ -40,7 +40,7 @@ if($_SESSION["role"] != 1){
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    <img style="max-width:40px; margin-top: -10px;" src="../css/Logo.png">
+                    <img style="max-height:40px; margin-top: -10px;" src="../css/Logo.png">
                 </a>
             </div>
                 <ul class="nav navbar-nav navbar-left">

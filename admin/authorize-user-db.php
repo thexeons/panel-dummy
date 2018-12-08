@@ -44,8 +44,8 @@ if(isset($_POST['authorize'])){
 		"accountnum"=>$getAccN,
 		"photo"=>$getPhot,
 		"verified"=>$getVerif,
-		"bcabank"=>"1",
-		"bcainsurance"=>"0",
+		"bcabank"=>"0",
+		"bcainsurance"=>"1",
 		"bcafinancial"=>"0",
 		"bcasyariah"=>"0",
 		"bcasekuritas"=>"0"
