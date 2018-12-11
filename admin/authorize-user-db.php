@@ -45,8 +45,8 @@ if(isset($_POST['authorize'])){
 		"accountnum"=>$getAccN,
 		"photo"=>$getPhot,
 		"verified"=>$getVerif,
-		"bcabank"=>"0",
-		"bcainsurance"=>"1",
+		"bcabank"=>"1",
+		"bcainsurance"=>"0",
 		"bcafinancial"=>"0",
 		"bcasyariah"=>"0",
 		"bcasekuritas"=>"0"
@@ -67,9 +67,23 @@ if(isset($_POST['authorize'])){
 	$result = curl_exec($curl);
 	echo $result;
 
+	if (curl_error($curl)) {
+    	$error_msg = curl_error($curl);
+	}
+	curl_close($curl);
 
-	header("location: authorize-user-result.php");
-	return;
+	if (isset($error_msg)) {
+		$_SESSION["errortype"] = "Authorize";
+		$_SESSION["errorktp"] = "$getKtp";
+		header("location: curl-error.php");
+		return;
+	}
+	else{
+		header("location: authorize-user-result.php");
+		return;
+	}
+
+	
 }
 else if(isset($_POST['reject'])){
 	$getCurrId = $_POST["id"];
@@ -130,7 +144,22 @@ else if(isset($_POST['reject'])){
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	$result = curl_exec($curl);
 	echo $result;
-	header("location: authorize-user.php");
-	return;
+	
+
+	if (curl_error($curl)) {
+    	$error_msg = curl_error($curl);
+	}
+	curl_close($curl);
+
+	if (isset($error_msg)) {
+		$_SESSION["errortype"] = "Reject";
+		$_SESSION["errorktp"] = "$getKtp";
+		header("location: curl-error.php");
+		return;
+	}
+	else{
+		header("location: authorize-user.php");
+		return;
+	}
 }
 ?>

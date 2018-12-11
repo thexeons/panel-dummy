@@ -78,5 +78,8 @@ if(isset($_POST['verifyUpdate'])){
 	header("location: update-user.php");
 	return;
 }
-
+else if(isset($_POST['xd'])){
+	header("location: welcome-admin.php");
+	return;	
+}
 ?>

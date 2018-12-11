@@ -41,7 +41,7 @@ if($_SESSION["role"] != 1){
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="welcome-admin.php">
                     <img style="max-height:40px; margin-top: -10px;" src="../css/Logo.png">
                 </a>
             </div>

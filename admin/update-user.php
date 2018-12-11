@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="welcome-admin.php">
                     <img style="max-height:40px; margin-top: -10px;" src="../css/Logo.png">
                 </a>
             </div>
@@ -77,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </nav>
     <br><br>
     <h1>Updates List</h1>
-    <div class="col-sm-2" style="overflow-y:scroll; height:1000px;">
+    <div class="col-sm-2" style="overflow-y:scroll; height:1030px;">
         <div class="form-group">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="input-group">
@@ -242,7 +242,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <div class="form-group">
                     <label>Photo</label><br>
-                    <img id ="getPhotoNew" style="width:540px;height:270px" src="../css/null.png">
+                    <img id ="photonew" style="width:540px;height:270px" src="../css/null.png">
                 </div> 
         </div>
     </div>

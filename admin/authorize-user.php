@@ -39,7 +39,7 @@ if($_SESSION["role"] != 1){
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="welcome-admin.php">
                     <img style="max-height:40px; margin-top: -10px;" src="../css/Logo.png">
                 </a>
             </div>
@@ -107,7 +107,7 @@ if($_SESSION["role"] != 1){
                 $getPhoto = $row['photo'];
 
                 $class = ($i == 0) ? "" : "alt";
-                echo "<form action=\"authorize-user-db.php\" method=\"post\" enctype=\"multipart/form-data\">";
+                echo "<form action=\"authorize-user-db.php\" method=\"post\" enctype=\"multipart/form-data\"  onsubmit=\"return confirm('Authorize this user?');\">";
                 echo "<tr class=\"".$class."\">";
                 echo "<td data-toggle=\"modal\" data-target=\"#$getID\" style=\"text-align:center;vertical-align:middle;width:90px\">".$row["ktp"]."</td>";
                 echo "<td style=\"text-align:center;vertical-align:middle;\">".$row["firstname"]."</td>";

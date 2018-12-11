@@ -67,8 +67,21 @@ if(isset($_POST['blacklist'])){
 	$result = curl_exec($curl);
 	echo $result;
 
-	header("location: blacklist-user-result.php");
-	return;
+	if (curl_error($curl)) {
+    	$error_msg = curl_error($curl);
+	}
+	curl_close($curl);
+
+	if (isset($error_msg)) {
+		$_SESSION["errortype"] = "Blacklist";
+		$_SESSION["errorktp"] = "$getKtp";
+		header("location: curl-error.php");
+		return;
+	}
+	else{
+		header("location: blacklist-user-result.php");
+		return;
+	}
 }
 
 ?>

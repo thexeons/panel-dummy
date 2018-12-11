@@ -1,9 +1,5 @@
 <?php
 session_start();
- 
-$_SESSION["searchFName"] = "";
-$_SESSION["verified1"] = "1";
-$_SESSION["verified2"] = "2";
 
 if(!isset($_SESSION["loggedin"])){
     header("location: ../login.php");
@@ -15,13 +11,28 @@ if($_SESSION["role"] != 1){
         return;
     }
 }
+
+if($_SESSION["errortype"]=="Blacklist"){
+	$title="Blacklist";
+}
+if($_SESSION["errortype"]=="Authorize"){
+	$title="Authorization";
+}
+if($_SESSION["errortype"]=="Reject"){
+	$title="Reject";
+}
+if($_SESSION["errortype"]=="Update"){
+    $title="Update";
+}
+
+
 ?>
  
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome Admin</title>
+    <title><?php echo htmlspecialchars($title);?> Fail</title>
     <link rel="shortcut icon" href="../css/Logo.png">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -44,21 +55,11 @@ if($_SESSION["role"] != 1){
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="welcome-admin.php">
+                <a class="navbar-brand" href="#">
                     <img style="max-height:40px; margin-top: -10px;" src="../css/Logo.png">
                 </a>
             </div>
-                <ul class="nav navbar-nav navbar-left">
-                    <li>
-                        <a href="authorize-user.php">Authorize User</a>
-                    </li>
-                    <li>
-                        <a href="update-user.php">Pending Update</a>
-                    </li>
-                    <li>
-                        <a href="approved-user.php">Approved User</a>
-                    </li>
-                </ul>
+                
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#" id="date">
@@ -72,44 +73,16 @@ if($_SESSION["role"] != 1){
                 </ul>
         </div>
     </nav>
-    <br><br><br><br><br><br><br>
-
-    <?php
-        $file = file_get_contents('bcainstance');
-        $conn = new mysqli("localhost", "root", "", $file);
-        $sql = "select count(*) as listrow from mstemp";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $pendingUpdate = $row['listrow'];
-            }
-        }
-
-        $conn = new mysqli("localhost", "root", "", $file);
-        $sql = "select count(*) as listrow from msdata where verified='0'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $pendingUser = $row['listrow'];
-            }
-        }
-
-        $conn->close();
-    ?>
+    <br><br><br><br><br><br><br><br><br><br>
 
     <div class="container">
-        <div class="col-sm-2"></div> 
-            <div class="col-sm-8">
-                <div> <h3>Hi, <?php echo htmlspecialchars($_SESSION['username']);?></h3> </div><br>
-                <div> <h3>You have,</h3> </div>
-                <div> <h3> <b><?php echo "$pendingUser";?></b> pending user(s)</h3> </div>
-                <div> <h3> <b><?php echo "$pendingUpdate";?></b> pending update(s)</h3> </div>
-                <div> <h3> waiting for you.</h3> </div>
-                <div> <h3> Have a nice day.</h3> </div>
-            </div> 
-        <div class="col-sm-2"></div> 
-
+    	<h3><?php echo "$title";?> Fail - <?php echo htmlspecialchars($_SESSION['errorktp']);?></h3><br>
+    	<h3>The server is down at the moment. Please try again later.</h3><br>
+        <h3>We apologize for the inconvenience and thank you for your patience.</h3><br>
     </div>
 
+    <form action="update-user-db.php" method="post">
+    <button class="btn btn-success" name="xd">Return</button>
+    </form>
 </body>
 </html>

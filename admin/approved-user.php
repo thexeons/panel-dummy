@@ -65,7 +65,7 @@ $buttonBlacklist = "<button>Haha</button>";
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="welcome-admin.php">
                     <img style="max-height:40px; margin-top: -10px;" src="../css/Logo.png">
                 </a>
             </div>
@@ -95,7 +95,7 @@ $buttonBlacklist = "<button>Haha</button>";
     </nav>
     <br><br>
     <h1>Approved User</h1>
-    <div class="col-sm-2" style="overflow-y:scroll; height:550px;">
+    <div class="col-sm-2" style="overflow-y:scroll; height:620px;">
         <div class="form-group">
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <div class="input-group">
@@ -221,7 +221,7 @@ $buttonBlacklist = "<button>Haha</button>";
                     <label>Handled by</label><input type="text" id="adminid" class="form-control" value="EMPTY" readonly>
                 </div>
                 <div class="form-group">
-                    <form action="blacklist-user-db.php" method="post" enctype="multipart/form-data">
+                    <form action="blacklist-user-db.php" method="post" enctype="multipart/form-data" onsubmit="return confirm('Blacklist this user?');">
                         <input type="hidden" name="blacklistktp" id="blktp">
                         <button class="btn btn-danger" id="blbutton" name="blacklist" style="visibility: hidden">Blacklist</button>
                     </form>    
