@@ -71,8 +71,11 @@ if($_SESSION["role"] != 1){
                     <li><a href="../logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
         </div>
-    </nav>
-    <br><br><br><br><br><br><br>
+        </nav>
+    <br><br>
+    <h1>Dashboard</h1>
+    <br><br><br><br><br>
+    
 
     <?php
         $file = file_get_contents('bcainstance');
@@ -100,8 +103,7 @@ if($_SESSION["role"] != 1){
     <div class="container">
         <div class="col-sm-2"></div> 
             <div class="col-sm-8">
-                <div> <h3>Hi, <?php echo htmlspecialchars($_SESSION['username']);?></h3> </div><br>
-                <div> <h3>You have,</h3> </div>
+                <div> <h3>Hi, <?php echo htmlspecialchars($_SESSION['username']);?> you have: </h3> </div><br>
                 <div> <h3> <b><?php echo "$pendingUser";?></b> pending user(s)</h3> </div>
                 <div> <h3> <b><?php echo "$pendingUpdate";?></b> pending update(s)</h3> </div>
                 <div> <h3> waiting for you.</h3> </div>
